@@ -28,6 +28,11 @@
 
     <!-- Page styles -->
     <link rel="stylesheet" href="styles/main.css">
+
+    <!-- Polymer and components -->
+    <script src="bower_components/platform/platform.js"></script>
+    <link rel="import" href="bower_components/polymer/polymer.html">
+    <link rel="import" href="bower_components/note-core/_dist/_vulcanized/inline/note-core.html">
   </head>
   <body>
     <header class="app-bar promote-layer">
@@ -51,6 +56,8 @@
     </nav>
 
     <main>
+      <note-core></note-core>
+
       <h1 id="hello">Hello!</h1>
       <p>Welcome to Web Starter Kit.</p>
 
