@@ -1,0 +1,12 @@
+{
+  "name": "note-app",
+  "version": "0.0.0",
+  "homepage": "https://github.com/wiz-note/note-app",
+  "authors": [
+    "Ikuo Terado <eqobar@gmail.com>"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "polymer": "Polymer/polymer#~0.4.0"
+  }
+}
