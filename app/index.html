@@ -56,16 +56,27 @@
     </nav>
 
     <main>
-      <note-core></note-core>
+      <div id="view"></div>
+    </main>
 
+    <script id="view-template" type="text/x-handlebars-template">
+      {{> view}}
+    </script>
+
+    <script id="home-partial" type="text/x-handlebars-template">
       <h1 id="hello">Hello!</h1>
       <p>Welcome to Web Starter Kit.</p>
 
       <h2 id="get-started">Get Started.</h2>
       <p>Read how to <a href="http://developers.google.com/web/starter-kit">Get Started</a> or check out the <a href="styleguide.html">Style Guide</a>.</p>
-    </main>
+    </script>
+
+    <script id="note-partial" type="text/x-handlebars-template">
+      <note-core></note-core>
+    </script>
 
     <!-- build:js scripts/main.min.js -->
+    <script src="bower_components/handlebars/handlebars.js"></script>
     <script src="scripts/main.js"></script>
     <!-- endbuild -->
 

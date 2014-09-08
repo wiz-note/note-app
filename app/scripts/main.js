@@ -47,4 +47,13 @@
       closeMenu();
     }
   });
+
+  function setView (view) {
+    Handlebars.registerPartial('view', querySelector(view).innerHTML);
+    var template = Handlebars.compile(querySelector('#view-template').innerHTML);
+    querySelector('#view').innerHTML = template();
+  }
+
+  setView('#home-partial');
+  // setView('#note-partial');
 })();
