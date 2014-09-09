@@ -54,6 +54,47 @@
     querySelector('#view').innerHTML = template();
   }
 
+
+  var ROUTES = {
+    root: {
+      state: 'root',
+      title: 'Root',
+      url: '/',
+      partial: '#home-partial'
+    },
+    notes: {
+      state: 'notes',
+      title: 'Notes',
+      url: '/notes',
+      partial: '#note-partial'
+    },
+    about: {
+      state: 'about',
+      title: 'About',
+      url: '/about',
+      partial: '#home-partial'
+    }
+  }
+
+  var navItems = document.querySelectorAll('#navigation li a');
+  for (var i = 0, l = navItems.length; i < l; i++) {
+    navItems[i].addEventListener('click', function (event) {
+      event.preventDefault();
+
+      var id = event.target.id || 'root';
+      window.history.pushState(ROUTES[id].state, ROUTES[id].title, ROUTES[id].url);
+      loadContent(id);
+    });
+  }
+
+  function loadContent (id) {
+    setView(ROUTES[id].partial);
+  }
+
+  window.addEventListener('popstate', function (event) {
+    var id = event.state || 'root';
+    loadContent(id);
+  });
+
   setView('#home-partial');
-  // setView('#note-partial');
 })();
