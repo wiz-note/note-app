@@ -48,13 +48,6 @@
     }
   });
 
-  function setView (view) {
-    Handlebars.registerPartial('view', querySelector(view).innerHTML);
-    var template = Handlebars.compile(querySelector('#view-template').innerHTML);
-    querySelector('#view').innerHTML = template();
-  }
-
-
   var ROUTES = {
     root: {
       state: 'root',
@@ -76,6 +69,13 @@
     }
   }
 
+  function setView (id) {
+    var view = ROUTES[id].partial;
+    Handlebars.registerPartial('view', querySelector(view).innerHTML);
+    var template = Handlebars.compile(querySelector('#view-template').innerHTML);
+    querySelector('#view').innerHTML = template();
+  }
+
   var navItems = document.querySelectorAll('#navigation li a');
   for (var i = 0, l = navItems.length; i < l; i++) {
     navItems[i].addEventListener('click', function (event) {
@@ -83,18 +83,14 @@
 
       var id = event.target.id || 'root';
       window.history.pushState(ROUTES[id].state, ROUTES[id].title, ROUTES[id].url);
-      loadContent(id);
+      setView(id);
     });
-  }
-
-  function loadContent (id) {
-    setView(ROUTES[id].partial);
   }
 
   window.addEventListener('popstate', function (event) {
     var id = event.state || 'root';
-    loadContent(id);
+    setView(id);
   });
 
-  setView('#home-partial');
+  setView('root');
 })();
