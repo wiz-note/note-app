@@ -93,4 +93,8 @@
   });
 
   setView('root');
+
+  querySelector('#account').addEventListener('click', function (event) {
+    console.log(event.target.id);
+  })
 })();
