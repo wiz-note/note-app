@@ -16,6 +16,9 @@
  *  limitations under the License
  *
  */
+
+/* global Handlebars */
+
 (function () {
   'use strict';
 
@@ -67,7 +70,7 @@
       url: '/about',
       partial: '#home-partial'
     }
-  }
+  };
 
   function setView (id) {
     var view = ROUTES[id].partial;
@@ -76,15 +79,17 @@
     querySelector('#view').innerHTML = template();
   }
 
+  function onClickNavItem (event) {
+    event.preventDefault();
+
+    var id = event.target.id || 'root';
+    window.history.pushState(ROUTES[id].state, ROUTES[id].title, ROUTES[id].url);
+    setView(id);
+  }
+
   var navItems = document.querySelectorAll('#navigation li a');
   for (var i = 0, l = navItems.length; i < l; i++) {
-    navItems[i].addEventListener('click', function (event) {
-      event.preventDefault();
-
-      var id = event.target.id || 'root';
-      window.history.pushState(ROUTES[id].state, ROUTES[id].title, ROUTES[id].url);
-      setView(id);
-    });
+    navItems[i].addEventListener('click', onClickNavItem);
   }
 
   window.addEventListener('popstate', function (event) {
@@ -96,5 +101,5 @@
 
   querySelector('#account').addEventListener('click', function (event) {
     console.log(event.target.id);
-  })
+  });
 })();
