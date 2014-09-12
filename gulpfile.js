@@ -22,6 +22,7 @@
 // Include Gulp & Tools We'll Use
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
+var coffee = require('gulp-coffee');
 var del = require('del');
 var runSequence = require('run-sequence');
 var browserSync = require('browser-sync');
@@ -39,6 +40,13 @@ var AUTOPREFIXER_BROWSERS = [
   'android >= 4.4',
   'bb >= 10'
 ];
+
+// Compile CoffeeScript
+gulp.task('coffee', function () {
+  return gulp.src('app/scripts/**/*.coffee')
+    .pipe(coffee({bare: false}))
+    .pipe(gulp.dest('.tmp/scripts'))
+});
 
 // Lint JavaScript
 gulp.task('jshint', function () {
@@ -141,7 +149,7 @@ gulp.task('html', function () {
 gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
 
 // Watch Files For Changes & Reload
-gulp.task('serve', ['styles'], function () {
+gulp.task('serve', ['styles', 'coffee'], function () {
   browserSync({
     notify: false,
     // Run as an https by uncommenting 'https: true'
@@ -153,6 +161,7 @@ gulp.task('serve', ['styles'], function () {
 
   gulp.watch(['app/**/*.html'], reload);
   gulp.watch(['app/styles/**/*.{scss,css}'], ['styles', reload]);
+  gulp.watch(['app/scripts/**/*.coffee'], ['coffee', reload]);
   gulp.watch(['app/scripts/**/*.js'], ['jshint']);
   gulp.watch(['app/images/**/*'], reload);
 });
