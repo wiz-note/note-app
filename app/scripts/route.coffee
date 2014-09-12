@@ -6,6 +6,7 @@ ROUTES =
     title: 'Root'
     url: '/'
     partial: '#home-partial'
+    init: [Account]
   notes:
     state: 'notes'
     title: 'Notes'
@@ -23,6 +24,10 @@ setView = (id) ->
   Handlebars.registerPartial 'view', document.querySelector(view).innerHTML
   template = Handlebars.compile document.querySelector('#view-template').innerHTML
   document.querySelector('#view').innerHTML = template()
+
+  if ROUTES[id].init?
+    for klass in ROUTES[id].init
+      new klass()
 
 onClickNavItem = (event) ->
   event.preventDefault()
