@@ -22,6 +22,7 @@
 // Include Gulp & Tools We'll Use
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
+var coffee = require('gulp-coffee');
 var del = require('del');
 var runSequence = require('run-sequence');
 var browserSync = require('browser-sync');
@@ -39,6 +40,13 @@ var AUTOPREFIXER_BROWSERS = [
   'android >= 4.4',
   'bb >= 10'
 ];
+
+// Compile CoffeeScript
+gulp.task('coffee', function () {
+  return gulp.src('app/scripts/**/*.coffee')
+    .pipe(coffee({bare: false}))
+    .pipe(gulp.dest('.tmp/scripts'))
+});
 
 // Lint JavaScript
 gulp.task('jshint', function () {
@@ -83,18 +91,17 @@ gulp.task('fonts', function () {
 gulp.task('styles', function () {
   // For best performance, don't add Sass partials to `gulp.src`
   return gulp.src([
-      'app/styles/*.scss',
-      'app/styles/**/*.css',
-      'app/styles/components/components.scss'
-    ])
+    'app/styles/*.scss',
+    'app/styles/**/*.css',
+    'app/styles/components/components.scss'
+  ])
     .pipe($.changed('styles', {extension: '.scss'}))
     .pipe($.rubySass({
-        style: 'expanded',
-        precision: 10
-      })
-      .on('error', console.error.bind(console))
-    )
-    .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
+      style: 'expanded',
+      precision: 10
+    }))
+    .on('error', console.error.bind(console))
+    .pipe($.autoprefixer({browsers: AUTOPREFIXER_BROWSERS}))
     .pipe(gulp.dest('.tmp/styles'))
     // Concatenate And Minify Styles
     .pipe($.if('*.css', $.csso()))
@@ -142,20 +149,19 @@ gulp.task('html', function () {
 gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
 
 // Watch Files For Changes & Reload
-gulp.task('serve', ['styles'], function () {
+gulp.task('serve', ['styles', 'coffee'], function () {
   browserSync({
     notify: false,
     // Run as an https by uncommenting 'https: true'
     // Note: this uses an unsigned certificate which on first access
     //       will present a certificate warning in the browser.
     // https: true,
-    server: {
-      baseDir: ['.tmp', 'app']
-    }
+    server: ['.tmp', 'app']
   });
 
   gulp.watch(['app/**/*.html'], reload);
   gulp.watch(['app/styles/**/*.{scss,css}'], ['styles', reload]);
+  gulp.watch(['app/scripts/**/*.coffee'], ['coffee', reload]);
   gulp.watch(['app/scripts/**/*.js'], ['jshint']);
   gulp.watch(['app/images/**/*'], reload);
 });
@@ -168,10 +174,7 @@ gulp.task('serve:dist', ['default'], function () {
     // Note: this uses an unsigned certificate which on first access
     //       will present a certificate warning in the browser.
     // https: true,
-    server: {
-      baseDir: 'dist'
-    }
-
+    server: 'dist'
   });
 });
 
