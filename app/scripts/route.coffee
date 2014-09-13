@@ -4,19 +4,16 @@ class Route
 
   ROUTES:
     root:
-      state: 'root'
       title: 'Root'
       url: '/'
       partial: '#partial-home'
       init: [Account]
     notes:
-      state: 'notes'
       title: 'Notes'
       url: '/notes'
       partial: '#partial-note'
       init: [Note]
     about:
-      state: 'about'
       title: 'About'
       url: '/about'
       partial: '#partial-home'
@@ -27,26 +24,26 @@ class Route
       item.addEventListener 'click', @onClickNavItem
 
     window.addEventListener 'popstate', (event) =>
-      id = event.state || 'root'
-      @setView id
+      state = event.state || 'root'
+      @setView state
 
     @setView 'root'
 
   onClickNavItem: (event) =>
     event.preventDefault()
 
-    id = event.target.id || 'root'
-    window.history.pushState @ROUTES[id].state, @ROUTES[id].title, @ROUTES[id].url
-    @setView id
+    state = event.target.id || 'root'
+    window.history.pushState state, @ROUTES[state].title, @ROUTES[state].url
+    @setView state
 
-  setView: (id) ->
-    view = @ROUTES[id].partial
+  setView: (state) ->
+    view = @ROUTES[state].partial
     Handlebars.registerPartial 'view', document.querySelector(view).innerHTML
     template = Handlebars.compile document.querySelector('#view-template').innerHTML
     document.querySelector('#view').innerHTML = template()
 
-    if @ROUTES[id].init?
-      for klass in @ROUTES[id].init
+    if @ROUTES[state].init?
+      for klass in @ROUTES[state].init
         new klass()
 
 
