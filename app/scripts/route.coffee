@@ -30,15 +30,13 @@ class Route
     @setView 'root'
 
   onClickNavItem: (event) =>
-    event.preventDefault()
-
     state = event.target.id || 'root'
     window.history.pushState state, @ROUTES[state].title, @ROUTES[state].url
     @setView state
 
   setView: (state) ->
-    view = @ROUTES[state].partial
-    Handlebars.registerPartial 'view', document.querySelector(view).innerHTML
+    partial = @ROUTES[state].partial
+    Handlebars.registerPartial 'view', document.querySelector(partial).innerHTML
     template = Handlebars.compile document.querySelector('#view-template').innerHTML
     document.querySelector('#view').innerHTML = template()
 
