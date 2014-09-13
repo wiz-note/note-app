@@ -75,12 +75,15 @@
     </script>
 
     <script id="note-partial" type="text/x-handlebars-template">
-      <note-core></note-core>
+      <div id="note-container">
+        <note-core></note-core>
+      </div>
     </script>
 
     <!-- build:js scripts/main.min.js -->
     <script src="bower_components/handlebars/handlebars.js"></script>
     <script src="scripts/account.js"></script>
+    <script src="scripts/note.js"></script>
     <script src="scripts/route.js"></script>
     <script src="scripts/navbar.js"></script>
     <script src="scripts/main.js"></script>

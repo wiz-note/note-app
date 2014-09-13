@@ -12,6 +12,7 @@ ROUTES =
     title: 'Notes'
     url: '/notes'
     partial: '#note-partial'
+    init: [Note]
   about:
     state: 'about'
     title: 'About'
