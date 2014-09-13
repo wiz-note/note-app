@@ -10,7 +10,6 @@ class NavBar
     main.addEventListener 'click', @closeMenu
 
     @appbarElement = document.querySelector '.app-bar'
-    console.log @appbarElement
 
     menuBtn = document.querySelector '.menu'
     menuBtn.addEventListener 'click', @toggleMenu
