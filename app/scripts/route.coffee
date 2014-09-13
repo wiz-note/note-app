@@ -7,19 +7,19 @@ class Route
       state: 'root'
       title: 'Root'
       url: '/'
-      partial: '#home-partial'
+      partial: '#partial-home'
       init: [Account]
     notes:
       state: 'notes'
       title: 'Notes'
       url: '/notes'
-      partial: '#note-partial'
+      partial: '#partial-note'
       init: [Note]
     about:
       state: 'about'
       title: 'About'
       url: '/about'
-      partial: '#home-partial'
+      partial: '#partial-home'
 
   constructor: ->
     navItems = document.querySelectorAll '#navigation li a'
