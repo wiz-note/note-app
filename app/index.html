@@ -62,28 +62,30 @@
       {{> view}}
     </script>
 
-    <script id="home-partial" type="text/x-handlebars-template">
+    <script id="partial-home" type="text/x-handlebars-template">
       <h2 id="get-started">Get Started.</h2>
       <br>
 
       <div id="account">
-        <button id="signup">Sign up</button>
-        or
-        <button id="signin">Sign in</button>
+        <button id="signin-google">Sign in with G</button>
       </div>
 
       <p>Read how to <a href="http://developers.google.com/web/starter-kit">Get Started</a> or check out the <a href="styleguide.html">Style Guide</a>.</p>
 
     </script>
 
-    <script id="note-partial" type="text/x-handlebars-template">
-      <note-core></note-core>
+    <script id="partial-note" type="text/x-handlebars-template">
+      <div id="note-container">
+        <note-core></note-core>
+      </div>
     </script>
 
     <!-- build:js scripts/main.min.js -->
     <script src="bower_components/handlebars/handlebars.js"></script>
     <script src="scripts/account.js"></script>
+    <script src="scripts/note.js"></script>
     <script src="scripts/route.js"></script>
+    <script src="scripts/navbar.js"></script>
     <script src="scripts/main.js"></script>
     <!-- endbuild -->
 
