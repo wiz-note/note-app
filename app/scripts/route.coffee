@@ -18,6 +18,8 @@ class Route
       url: '/about'
       partial: '#partial-home'
 
+  classPool: null
+
   constructor: ->
     navItems = document.querySelectorAll '#navigation li a'
     for item in navItems
@@ -41,8 +43,11 @@ class Route
     document.querySelector('#view').innerHTML = template()
 
     if @ROUTES[state].init?
+      @classPool = []
       for klass in @ROUTES[state].init
-        new klass()
+        @classPool.push new klass()
+
+    return
 
 
 window.Route = Route
